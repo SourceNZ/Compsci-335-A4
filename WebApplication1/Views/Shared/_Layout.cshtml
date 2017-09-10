@@ -18,8 +18,13 @@
                     <span class="icon-bar"></span>
 
                 </button>
-                                @Html.ActionLink("Sql WebGrid", "WebGrid", "Sql")
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Sql WebGrid", "WebGrid", "Sql")</li>
+                </ul>               
+               
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
