@@ -27,31 +27,39 @@ namespace WebApplication1.Controllers
 
             using (var nwd = new NorthwindEntities())
             {
+                 
                 var _res = nwd.Products
-                    .OrderBy(sortCol + " " + sortDir)
+                    .OrderBy(sortCol + " " + sortDir + ", " + "ProductID" + " " + sortDir)
                     .Skip((page - 1) * rowsPerPage)
                     .Take(rowsPerPage)
                     .Select(o => new MyModel
                     {
                         ProductID = o.ProductID,
                         ProductName = o.ProductName,
-                        SupplierID = o.SupplierID,
-                        CategoryID = o.CategoryID,
-                        CategoryName = o.Category.CategoryName,
+                        SupplierID = !o.SupplierID.HasValue ? (int?)null : (int?)o.SupplierID,
+                        CategoryID = !o.CategoryID.HasValue ? (int?)null : (int?)o.CategoryID,
+                       // SupplierID = o.SupplierID,
+                       // CategoryID = o.CategoryID,
+                        CategoryName = !o.CategoryID.HasValue ? (string)null : (string) o.Category.CategoryName,
                         UnitPrice = o.UnitPrice,
                         UnitsInStock = o.UnitsInStock,
                         UnitsOnOrder = o.UnitsOnOrder,
-                        CompanyName = o.Supplier.CompanyName,
-                        ContactName = o.Supplier.ContactName,
+                        CompanyName = !o.SupplierID.HasValue ? (string)null : (string)o.Supplier.CompanyName,
+                        ContactName = !o.SupplierID.HasValue ? (string)null : (string)o.Supplier.ContactName,
                         Country = o.Supplier.Country,
 
                     });
                 
                 res = _res.ToList();
                 count = nwd.Products.Count();
+                sql = nwd.Products.AsQueryable().OrderBy(sortCol + " " + sortDir + ", " + "ProductID" + " " + sortDir).Skip((page - 1) * rowsPerPage).Take(rowsPerPage).ToString();
+                ViewBag.sql = sql;
                 
             }
+            //Sorting by the supplier and category can return nulls so need to account for that.
 
+            ViewBag.sortDir = sortDir;
+            ViewBag.sql = sql;
             ViewBag.sortCol = sortCol;
             ViewBag.rowsPerPage = rowsPerPage;
             ViewBag.count = count;
@@ -61,6 +69,14 @@ namespace WebApplication1.Controllers
 }
 
 
+// var query = from item in nwd.Products
+//           orderby (sortCol + " " + sortDir + ", " + "ProductID" + " " + sortDir) 
+//            select item;
+//var topTwo = query.Take(rowsPerPage);
 
+
+//sql = topTwo.ToString();
+//sql = nwd.Products.AsQueryable().Where()
+//sql = nwd.Products.OrderBy(o => o.ProductID ).ThenBy(o => o.ProductName).ToString();
 
 

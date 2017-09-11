@@ -11,7 +11,16 @@
     grid.Bind(Model, rowCount: ViewBag.count, autoSortAndPage: false);
 
 }
+<script>
+    if(@grid.SortColumn != "ProductID" ){
+        document.getElementById("Ordering").innerHTML = "@ViewBag.sortCol  @ViewBag.sortDir ProductID  @ViewBag.sortDir";
+    }
+    else {
+        document.getElementById("Ordering").innerHTML = "@ViewBag.sortCol  @ViewBag.sortDir";
+    }
 
+</script>
+ 
 
 <STYLE type="text/css">
     webgrid {
@@ -71,21 +80,20 @@
 
 <h3>Missing (useful but not complete checklist)</h3>
 <ul>
-    <li>Response HTML table with complete borders and all the required columns</li>
-    <li>Header of primary sorted column has up/down arrows</li>
-    <li>Primary sorting possible on all columns, coming from all tables</li>
-    <li>Secondary sorting on main primary key, in the same direction as the primary sorting</li>
-    <li>The automatically generated SQL code is displayed in a bottom textarea box</li>
-    <li>For the purpose of sorting, nulls – if any – are considered lower than any non-null value, so they appear first in ASC order</li>
-    <li>Illegal column names and sorting orders are replaced by default values</li>
+    
+    
+    <li>NEED TO DO Primary sorting possible on all columns, coming from all tables </li>
+    <li>ALMOST The automatically generated SQL code is displayed in a bottom textarea box </li>
+    <li>NEED TO DO For the purpose of sorting, nulls – if any – are considered lower than any non-null value, so they appear first in ASC order</li>
+    <li>NEED TO DO Illegal column names and sorting orders are replaced by default values</li>
 </ul>
 
 <div>
     @grid.GetHtml(
         tableStyle: "table",
         columns: grid.Columns(
-            grid.Column(header: "Product ID " + (grid.SortColumn == "ProductID" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "ProductID", style: "ProductID", canSort: true),
-            grid.Column(header: "Product Name " + (grid.SortColumn == "ProductName" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "ProductName", style: "ProductName", canSort: true),
+            grid.Column(header: "Product ID " + (grid.SortColumn == "ProductID" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "ProductID", style: "ProductID"),
+            grid.Column(header: "Product Name " + (grid.SortColumn == "ProductName" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "ProductName", style: "ProductName"),
             grid.Column(header: "Unit Price " + (grid.SortColumn == "UnitPrice" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "UnitPrice", style: "UnitPrice", format:@<text>@item.UnitPrice.ToString("C")</text>),
             grid.Column(header: "Units In Stock " + (grid.SortColumn == "UnitsInStock" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "UnitsInStock", style: "UnitsInStock"),
             grid.Column(header: "Units On Order " + (grid.SortColumn == "UnitsOnOrder" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "UnitsOnOrder", style: "UnitsOnOrder"),
@@ -99,9 +107,9 @@
         mode: WebGridPagerModes.All
     )
 
-    <div>
+    <div >
         <h3>Ordering by:</h3>
-        <b> @grid.SortColumn </b> @grid.SortDirection
+        <b id="Ordering">@ViewBag.sortCol  @ViewBag.sortDir ProductID  @ViewBag.sortDir</b>
     </div>
 </div>
 
@@ -110,6 +118,6 @@
 <div style="max-width: 100%;">
     <h4>Request SQL:</h4>
     <textarea id="styled" rows="16" cols="100" style="max-width: 100%;">
-        ???
+        @ViewBag.sql 
     </textarea>
 </div>
