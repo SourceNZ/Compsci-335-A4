@@ -11,7 +11,7 @@ namespace WebApplication1.Controllers
 {
     public class SqlController : Controller
     {
-        // GET: Sql
+        //GET: Sql
         public ActionResult Index()
         {
             return View();

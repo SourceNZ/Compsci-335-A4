@@ -75,26 +75,26 @@
     @grid.GetHtml(
         tableStyle: "table",
         columns: grid.Columns(
-            grid.Column(header: "ProductID", columnName: "ProductID", style: "ProductID"),
-            grid.Column(header: "ProductName", columnName: "ProductName", style: "ProductName"),
-            grid.Column(header: "SupplierID", columnName: "SupplierID", style: "SupplierID"),
-            grid.Column(header: "CategoryID", columnName: "CategoryID", style: "CategoryID"),
-            grid.Column(header: "CategoryName", columnName: "CategoryName", style: "CategoryName"),
-            grid.Column(header: "UnitPrice", columnName: "UnitPrice", style: "UnitPrice"),
-            grid.Column(header: "UnitsInStock", columnName: "UnitsInStock", style: "UnitsInStock"),
-            grid.Column(header: "UnitsOnOrder", columnName: "UnitsOnOrder", style: "UnitsOnOrder"),
-            grid.Column(header: "CompanyName", columnName: "CompanyName", style: "CompanyName"),
-            grid.Column(header: "ContactName", columnName: "ContactName", style: "ContactName"),
+            grid.Column(header: "Product ID", columnName: "ProductID", style: "ProductID"),
+            grid.Column(header: "Product Name", columnName: "ProductName", style: "ProductName"),
+            grid.Column(header: "Supplier ID", columnName: "SupplierID", style: "SupplierID"),
+            grid.Column(header: "Category ID", columnName: "CategoryID", style: "CategoryID"),
+            grid.Column(header: "Category Name", columnName: "CategoryName", style: "CategoryName"),
+            grid.Column(header: "Unit Price", columnName: "UnitPrice", style: "UnitPrice", format:@<text>@item.UnitPrice.ToString("C")</text>),
+            grid.Column(header: "Units In Stock", columnName: "UnitsInStock", style: "UnitsInStock"),
+            grid.Column(header: "Units On Order", columnName: "UnitsOnOrder", style: "UnitsOnOrder"),
+            grid.Column(header: "Company Name", columnName: "CompanyName", style: "CompanyName"),
+            grid.Column(header: "Contact Name", columnName: "ContactName", style: "ContactName"),
             grid.Column(header: "Country", columnName: "Country", style: "Country")
 
 
         ),
-        mode: WebGridPagerModes.NextPrevious
+        mode: WebGridPagerModes.All
     )
 
     <div>
         <h3>Ordering by:</h3>
-        <b>???</b> ???
+        <b> @grid.SortColumn </b> @grid.SortDirection
     </div>
 </div>
 
