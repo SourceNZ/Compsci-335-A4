@@ -14,6 +14,7 @@ namespace WebApplication1.Controllers
         //GET: Sql
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -32,7 +33,6 @@ namespace WebApplication1.Controllers
                     .Take(rowsPerPage)
                     .Select(o => new MyModel
                     {
-
                         ProductID = o.ProductID,
                         ProductName = o.ProductName,
                         SupplierID = o.SupplierID,
@@ -46,9 +46,10 @@ namespace WebApplication1.Controllers
                         Country = o.Supplier.Country,
 
                     });
-
+                
                 res = _res.ToList();
                 count = nwd.Products.Count();
+                
             }
 
             ViewBag.sortCol = sortCol;
@@ -58,3 +59,8 @@ namespace WebApplication1.Controllers
         }
     }
 }
+
+
+
+
+

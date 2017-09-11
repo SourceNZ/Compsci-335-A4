@@ -7,36 +7,51 @@
         sortFieldName: "sortCol",
         sortDirectionFieldName: "sortDir",
         rowsPerPage: ViewBag.rowsPerPage);
+
     grid.Bind(Model, rowCount: ViewBag.count, autoSortAndPage: false);
+
 }
 
+
 <STYLE type="text/css">
-    .CategoryID {
-        width: 80px;
+    webgrid {
+        border: 1px;
+        border-collapse: collapse;
+
+    }
+    table, td, th {
+        border: 1px solid grey;
+
+
     }
 
     .CategoryName {
-        width: 160px;
+        width: 80px;
+
     }
 
     .ProductID {
         width: 60px;
+        text-align:right;
+
     }
 
     .ProductName {
-        width: 60px;
-    }
+        width: 80px;
 
-    .SupplierID {
-        width: 30px;
     }
 
     .UnitPrice {
-        width: 120px;
-    }
-
-    .UnitsInStock {
         width: 60px;
+        text-align:right;
+    }
+    .UnitsInStock {
+        width: 80px;
+        text-align:right;
+    }
+    .UnitsOnOrder {
+        width: 80px;
+        text-align:right;
     }
     .CompanyName {
         width: 60px;
@@ -47,9 +62,9 @@
     .Country {
         width: 60px;
     }
-   
-     
-    
+
+
+
 </STYLE>
 
 <h2>WebGrid View</h2>
@@ -58,14 +73,8 @@
 <ul>
     <li>Response HTML table with complete borders and all the required columns</li>
     <li>Header of primary sorted column has up/down arrows</li>
-    <li>Extra space in headers – if required in composed words</li>
     <li>Primary sorting possible on all columns, coming from all tables</li>
     <li>Secondary sorting on main primary key, in the same direction as the primary sorting</li>
-    <li>Reasonable column sizes s.t. headers always fit in one row, even with sorting arrows</li>
-    <li>Price has currency formating</li>
-    <li>Numbers are right aligned</li>
-    <li>Table footer has a pager with a complete set of usual options (first, previous, page numbers, next, last)</li>
-    <li>The "Ordering by" label indicates the current primary sorting column and direction </li>
     <li>The automatically generated SQL code is displayed in a bottom textarea box</li>
     <li>For the purpose of sorting, nulls – if any – are considered lower than any non-null value, so they appear first in ASC order</li>
     <li>Illegal column names and sorting orders are replaced by default values</li>
@@ -75,17 +84,15 @@
     @grid.GetHtml(
         tableStyle: "table",
         columns: grid.Columns(
-            grid.Column(header: "Product ID", columnName: "ProductID", style: "ProductID"),
-            grid.Column(header: "Product Name", columnName: "ProductName", style: "ProductName"),
-            grid.Column(header: "Supplier ID", columnName: "SupplierID", style: "SupplierID"),
-            grid.Column(header: "Category ID", columnName: "CategoryID", style: "CategoryID"),
-            grid.Column(header: "Category Name", columnName: "CategoryName", style: "CategoryName"),
-            grid.Column(header: "Unit Price", columnName: "UnitPrice", style: "UnitPrice", format:@<text>@item.UnitPrice.ToString("C")</text>),
-            grid.Column(header: "Units In Stock", columnName: "UnitsInStock", style: "UnitsInStock"),
-            grid.Column(header: "Units On Order", columnName: "UnitsOnOrder", style: "UnitsOnOrder"),
-            grid.Column(header: "Company Name", columnName: "CompanyName", style: "CompanyName"),
-            grid.Column(header: "Contact Name", columnName: "ContactName", style: "ContactName"),
-            grid.Column(header: "Country", columnName: "Country", style: "Country")
+            grid.Column(header: "Product ID " + (grid.SortColumn == "ProductID" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "ProductID", style: "ProductID", canSort: true),
+            grid.Column(header: "Product Name " + (grid.SortColumn == "ProductName" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "ProductName", style: "ProductName", canSort: true),
+            grid.Column(header: "Unit Price " + (grid.SortColumn == "UnitPrice" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "UnitPrice", style: "UnitPrice", format:@<text>@item.UnitPrice.ToString("C")</text>),
+            grid.Column(header: "Units In Stock " + (grid.SortColumn == "UnitsInStock" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "UnitsInStock", style: "UnitsInStock"),
+            grid.Column(header: "Units On Order " + (grid.SortColumn == "UnitsOnOrder" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "UnitsOnOrder", style: "UnitsOnOrder"),
+            grid.Column(header: "Category Name " + (grid.SortColumn == "CategoryName" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "CategoryName", style: "CategoryName"),
+            grid.Column(header: "Company Name " + (grid.SortColumn == "CompanyName" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "CompanyName", style: "CompanyName"),
+            grid.Column(header: "Contact Name " + (grid.SortColumn == "ContactName" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "ContactName", style: "ContactName"),
+            grid.Column(header: "Country " + (grid.SortColumn == "Country" ? (grid.SortDirection == SortDirection.Ascending ? "▲" : "▼") : ""), columnName: "Country", style: "Country")
 
 
         ),
