@@ -24,10 +24,45 @@ namespace WebApplication1.Controllers
             List<MyModel> res;
             int count;
             string sql;
+            HashSet<string> sortColList = new HashSet<string>() {
+            "CategoryName", "CompanyName", "ContactName", "Country", "ProductID", "ProductName", "SupplierID", "CategoryID",
+                "UnitPrice", "UnitsInStock", "UnitsOnOrder", "CategoryID"
+            };
+            HashSet<string> sortDirList = new HashSet<string>() {
+            "ASC", "DESC"
+            };
+
+            if (sortColList.Contains(sortCol) && sortDirList.Contains(sortDir))
+            {
+                if (sortCol == "CategoryName")
+                {
+                    sortCol = "Category.CategoryName";
+                }
+                else if (sortCol == "CompanyName")
+                {
+                    sortCol = "Supplier.CompanyName";
+                }
+                else if (sortCol == "ContactName")
+                {
+                    sortCol = "Supplier.ContactName";
+                }
+                else if (sortCol == "Country")
+                {
+                    sortCol = "Supplier.Country";
+                }
+            }
+            else
+            {
+                sortCol = "ProductID";
+                sortDir = "ASC";
+            }
+
+
 
             using (var nwd = new NorthwindEntities())
             {
-                 
+                
+                
                 var _res = nwd.Products
                     .OrderBy(sortCol + " " + sortDir + ", " + "ProductID" + " " + sortDir)
                     .Skip((page - 1) * rowsPerPage)
@@ -40,7 +75,7 @@ namespace WebApplication1.Controllers
                         CategoryID = !o.CategoryID.HasValue ? (int?)null : (int?)o.CategoryID,
                        // SupplierID = o.SupplierID,
                        // CategoryID = o.CategoryID,
-                        CategoryName = !o.CategoryID.HasValue ? (string)null : (string) o.Category.CategoryName,
+                        CategoryName = !o.CategoryID.HasValue ? (string)null : (string)o.Category.CategoryName,
                         UnitPrice = o.UnitPrice,
                         UnitsInStock = o.UnitsInStock,
                         UnitsOnOrder = o.UnitsOnOrder,
